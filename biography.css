@@ -1,0 +1,671 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  border:none;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+
+}
+/* Overlay covering full screen */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  color: white;
+  font-size: 5rem;
+  overflow: hidden;
+  animation: fadeOutOverlay 4s forwards;
+  animation-delay: 3.5s; /* after all words appear */
+  animation: fadeOutOverlay 4s forwards; /* total duration = word count × word duration */
+}
+
+/* Container for words */
+.intro-text {
+  position: relative;
+  height: 5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Words style */
+.intro-text span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  opacity: 0;
+  animation: fadeInWord 0.5s ease forwards;
+}
+
+/* Sequential delays for each word */
+.intro-text span:nth-child(1) { animation-delay: 0s; }
+.intro-text span:nth-child(2) { animation-delay: 0.5s; }
+.intro-text span:nth-child(3) { animation-delay: 1s; }
+.intro-text span:nth-child(4) { animation-delay: 1.5s; }
+.intro-text span:nth-child(5) { animation-delay: 2s; }
+.intro-text span:nth-child(6) { animation-delay: 2.5s; }
+.intro-text span:nth-child(7) { animation-delay: 3s; }
+
+/* Smooth fade-in + scale */
+/* Fade in + fade out */
+@keyframes fadeInWord {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05);
+  }
+  80% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.8);
+  }
+}
+
+/* Fade out overlay after all words are visible */
+@keyframes fadeOutOverlay {
+  0%   { opacity: 1; pointer-events: all; }
+  85%  { opacity: 1; }   /* keep it fully visible until right before last word */
+  100% { opacity: 0; pointer-events: none; }
+}
+section {
+  scroll-snap-align: start;
+  min-height: 100vh;  /* each section takes full screen */
+  display: flex;
+
+}
+html{
+  font-size: 65%;
+scroll-behavior: smooth;
+
+}
+
+body{
+  overflow-x:hidden;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: white;
+}
+
+.navbar a{
+  font-size: 1.8rem;
+  text-decoration: none;
+  color: white;
+  margin-left: 2rem;
+  font-weight: 500;
+  transition: 0.3s ease;
+  border-bottom: 3px solid transparent;
+
+}
+
+.navbar{
+  position: fixed;
+  left:0;
+  top:0;
+  width: 100%;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  margin-top: 10px;
+
+}
+.navbar .logo{
+font-size: 25px;
+font-weight: 700;
+}
+.navbar ul{
+  display: flex;
+    margin-right: 30px;
+
+}
+.navbar ul li{
+  list-style: none;
+  margin-left: 10px;
+
+}
+.navbar ul li a{
+  font-size: 20px;
+  font-weight: 500;
+  transition: .5s;
+}
+.navbar ul li:hover a,.navbar ul li.active a{
+  color: red;
+  border-bottom: 1px red solid;
+}
+
+.home {
+  animation: fadeInContent 0.8s ease forwards;
+  animation-delay: 4s; /* starts as soon as last word begins fade */
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  padding: 60px 9% 0;
+  color: white;
+
+}
+.scl-links {
+  display: flex;         
+  align-items: center;   
+  gap: 20px;
+
+}
+.home-info .scl-links a {
+  display: inline-flex;       /* makes <a> flexible container */
+  justify-content: center;    /* centers icon horizontally */
+  align-items: center;        /* centers icon vertically */
+  width: 50px;                /* fixed width */
+  height: 50px;               /* fixed height (same as width) */
+  font-size: 3rem;            /* icon size */
+  color: red;
+  border: 2px solid white;
+  border-radius: 50%;         /* makes it a perfect circle */
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+.home-info .scl-links a:hover {
+  background: red;
+  color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.home-info h1{
+  font-size: 55px;
+
+}
+
+.home-info h2{
+  display: inline-block;
+  font-size: 32px;
+  margin-top: -10px;
+
+}
+.home-info h2 span{
+  position: relative;
+  display: inline-block;
+  color: transparent;
+  -webkit-text-stroke: .7px red;
+  animation: display-text 16s linear infinite;
+  animation-delay: calc(-4s * var(--i));
+}
+
+@keyframes display-text{
+  25%,100%{
+    display: none;
+  }
+}
+
+.home-info h2 span::before{
+  content: attr(data-text);
+  position: absolute;
+  width: 0;
+  border-right: 2px solid red;
+  color:red;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: fill-text 4s linear infinite;
+
+}
+
+@keyframes fill-text{
+  10%,100%{
+    width: 0;
+  }
+
+   50%,90%{
+    width: 100%;
+  }
+}
+
+
+.home-info p{
+  font-size: 16px;
+  margin: 10px 0 25px;
+
+}
+
+.home-box .image-box{
+  width: 32vw;
+  height: 32vw;
+  border-radius: 50%;
+  padding: 8px;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+}
+
+.home-box .image-box::before,.home-box .image-box::after {
+  content: "";
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: conic-gradient(transparent,transparent,transparent,red);
+  transform: rotate(0deg);
+  animation: rotate-border 10s linear infinite;
+
+}
+@keyframes rotate-border{
+  100%{
+    transform: rotate(360deg);
+  }
+
+}
+
+.home-box .image-box::after{
+  animation-delay: -5s;
+}
+.home-box .image-box .image-item {
+  position: relative;          /* keep for absolute img positioning if needed */
+  width: 100%;
+  height: 100%;
+  display: flex;               /* flex to center content */
+  justify-content: flex-end;   /* moves content to the right */
+  align-items: center;         /* vertically center */
+  border-radius: 50%;
+  overflow: hidden;            /* clip anything outside circle */
+  z-index: 1;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+
+}
+
+.home-box .image-box .image-item img {
+  width: 105%;
+  height: 105%;
+  object-fit: cover;
+  border-radius: 50%;          /* ensures image is circular */
+  display: block;
+  mix-blend-mode: lighten;
+
+}
+
+
+.education {
+  position: relative; /* needed for absolute children */
+  padding: 100px 9%;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  background-image: url("ryerson.jpg"); /* Ryerson background */
+  background-size: cover;                      /* makes it fill the section */
+  background-position: center;                 /* keeps it centered */
+  background-attachment: fixed;                /* parallax-like effect */
+  color: white;
+  text-align: center; /* affects normal flow children */
+  padding: 6rem 2rem;
+}
+
+
+.education::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* dark overlay */
+  z-index: 0;
+}
+
+.education h1 {
+  font-weight: 700; 
+  font-size: 4rem;
+  position: absolute; /* positioned relative to .education */
+  top: 70px;          /* distance from top */
+  left: 50%;          /* center horizontally */
+  transform: translateX(-50%); /* exact horizontal centering */
+
+}
+
+/* Education content below title */
+.education .education-item {
+    position: relative;
+  z-index: 1;
+  font-size: 1.6rem;
+  line-height: 1.6;
+  max-width: 800px;
+  padding: 100px 9% 100px;
+  text-align: left; /* left-align the info */
+  font-weight: 700; 
+  
+  
+}
+
+
+/* Optional underline below the section title */
+.education h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+
+.education .education-item strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+color: linear-gradient( #ff416c, #ff4b2b);
+text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+font-weight: 700;
+   white-space: nowrap; /* keeps everything on one line */
+     font-weight: 700; 
+}
+
+.education .education-item .duration {
+  display: block;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #690e2e;         /* warmer accent color */
+  font-weight: 700;       /* semi-bold */
+}
+
+.education .education-item p {
+  margin: 0.4rem 0;
+  font-size: 1.5rem;
+  color: #ffffff;         /* pure white for clarity */
+  font-weight: 800;       /* medium bold */
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.7); /* stands out on photo */
+}
+
+.education .education-item ul {
+  margin: 0.8rem 0 0 1.5rem;
+  padding-left: 1.5rem;
+  list-style-type: disc;
+  color: #ffffff;         /* white text */
+  font-size: 1.4rem;
+  line-height: 1.7;
+  font-weight: 800;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+
+.skills {
+  position: relative; /* needed for absolute children */
+  padding: 100px 9%;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  color: white;
+  text-align: center; /* affects normal flow children */
+}
+
+.skills h1 {
+  font-size: 4rem;
+  position: absolute; /* positioned relative to .education */
+  top: 70px;          /* distance from top */
+  left: 50%;          /* center horizontally */
+  transform: translateX(-50%); /* exact horizontal centering */
+}
+
+
+.skills .skills-item {
+  display: inline-block;             /* shrink to fit content */
+  font-size: 1.6rem;
+  height: auto;
+  padding: 4rem 4rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  margin: 3rem 1rem;                 /* spacing between blocks */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: left;
+  max-width: 100%;                    /* ensures it doesn’t overflow container */
+}
+
+/* Hover effect for subtle interaction */
+.skills .skills-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(255, 255, 255, 0.2);
+}
+
+
+.skills .skills-item strong {
+  display: block;                
+  font-size: 1.8rem;
+  color: #ff4b2b;                  /* highlight color */
+  margin-bottom: 1rem;
+}
+
+
+
+.skills .skills-item ul {
+  padding-left: 1.5rem;   /* space before bullets */
+  margin: 0;
+}
+
+.skills .skills-item ul li {
+  color: #ccc;
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;  /* spacing between bullet points */
+  line-height: 1.6;
+}
+
+.skills .skills-item ul li:last-child {
+  margin-bottom: 0;       /* remove extra space after last bullet */
+}
+
+/* Projects section */
+.projects {
+  position: relative;
+  padding: 100px 9%;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  color: white;
+  text-align: center;
+}
+
+.projects h1 {
+  font-size: 4rem;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.projects h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Each project item */
+.projects .project-item {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 6rem auto 0 auto; 
+  text-align: left;
+  padding: 0; 
+}
+
+
+.project-divider {
+  display: block;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.911); 
+  max-width: 800px;
+  margin: 4rem auto; 
+}
+
+/* Project title */
+.projects .project-item strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #ff4b2b;
+  white-space: nowrap; 
+}
+
+/* Tech stack */
+.projects .project-item .tech {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+  white-space: nowrap; 
+
+}
+
+/* Project description list */
+.projects .project-item ul {
+  margin: 0.5rem 0 1.5rem 1.2rem;
+  padding-left: 1.2rem;
+  white-space: normal; 
+}
+
+.projects .project-item ul li {
+  margin-bottom: 0.5rem;
+}
+
+
+.hobby {
+  position: relative;
+  padding: 100px 9%;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  color: white;
+  text-align: center;
+  flex-direction: column; /* stack children vertically */
+  align-items: center;    /* center horizontally */
+
+}
+
+.hobby h1 {
+  font-size: 4rem;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+}
+
+
+.hobby h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Each project item */
+.hobby .hobby-item {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 6rem auto 0 auto; 
+  text-align: left;
+  padding: 0; 
+  width: 100%;
+}
+
+
+.hobby .hobby-item strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #ff4b2b;
+  white-space: nowrap; /* keeps title on one line */
+}
+
+
+.work {
+  position: relative;
+  padding: 100px 9%;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  color: white;
+  text-align: center;
+}
+
+.work h1 {
+  font-size: 4rem;
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.work h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff416c, #ff4b2b);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Each project item */
+.work .work-item {
+  font-size: 1.6rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 6rem auto 0 auto; 
+  text-align: left;
+  padding: 0; 
+}
+
+
+.work .work-item strong {
+  display: block;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  color: #ff4b2b;
+  white-space: nowrap; 
+}
+
+
+.work .work-item .duration {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #ccc;
+  white-space: nowrap; 
+}
+
+.work .work-item ul {
+  margin: 0.5rem 0 1.5rem 1.2rem;
+  padding-left: 1.2rem;
+  white-space: normal; 
+}
+
+.work .work-item ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer {
+  padding: 2rem 0;
+  background: linear-gradient(135deg, #203a43, #2c5364);
+  color: #ccc;
+  text-align: center;
+  font-size: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.footer p {
+  margin: 0;
+}
+
